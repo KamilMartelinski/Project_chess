@@ -1,9 +1,10 @@
 function createPlayableChessBoard(){
 
-    createChessBoard();
+    generateSquareInformation()
+    addPieces();
 }  
 
-function createChessBoard(){
+function generateSquareInformation(){
 
     let rowNumber = 1;
      
@@ -17,16 +18,16 @@ function createChessBoard(){
             
             for(let i = 1; i <= columnNumber - 1; i++){
                 const nextCharacter = character => String.fromCharCode(character.charCodeAt(0) + 1);
-                columnCharacter = nextCharacter(columnCharacter);
+                columnCharacter = nextCharacter(columnCharacter);  
             }
 
-            console.log(columnCharacter);
+            console.log(columnCharacter);0    
             console.log(rowNumber);
         }
     }
 }
 
-function addPaces(){
+function addPieces(){
 
 }
 
