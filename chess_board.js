@@ -1,102 +1,119 @@
-function createPlayableChessBoard(){
+const createChessBoard = {
 
-    generateSquareInformation()
-    addPieces();
-}  
+    getSquareColor: (row, column) => { //picks a color for a square
 
-function generateSquareInformation(){
+        switch(row % 2){
+            case 0:
+                if(column % 2 === 0) return "white";
+                else return "black";
+                break;
+            default:
+                if(column % 2 === 0) return "black";
+                else return "white";
+                break;
+        };
+    },
 
+    convertNumberToCharacter: (number) => {
 
-    generateSquareIds()
-    class squareInformation{
-        constructor(color, where){
-            this.color = color;
-            this.where = where;
-        }
-    }
+        switch (number) {
+            case 0:
+                return "a";
+                break;
+            case 1:
+                return "b";
+                break;
+            case 2:
+                return "c";
+                break;
+            case 3:
+                return "d";
+                break;
+            case 4:
+                return "e";
+                break;
+            case 5:
+                return "f";
+                break;
+            case 6:
+                return "g";
+                break;
+            case 7:
+                return "h";
+                break;
+        };
+    },
 
-    for(let row = 1; row <= 8; row++){
+    addPieces: (row, column) => {
 
-        for(let column = 1; column <= 8; column++){
-
-            switch(row){
-                case column % 2 === 0:
-                    if(column % 2 === 0){
-                
-                    }
-                    else{
+        if(row === 1 || row === 6) return "pawn";
         
-                    }
-                    break;
-                case !column % 2 === 0:
-                    if(column % 2 === 0){
-                
-                    }
-                    else{
-        
-                    }
-                    break;
-            }
-        }
-    }
-}
+        if(column === 3 || row === 0 && row === 7) return "queen";
+        if(column === 4 || row === 0 && row === 7) return "king";
 
-function generateSquareIds(){
+        if(row === 0 || row === 7){
 
-    class squareInformation{
-
-        constructor(row, column, color, contains){
-            this.row = row;
-            this.column = column;
-            this.color = color;
-            this.contains = contains;
-        }
-    }
-
-    let squareInformationArray = [];
-     
-    for(let row = 1; row <= 8; row++){
-
-        for(let column = 1; column <= 8; column++){
-
-            let columnCharacter = `a`;
-            
-            for(let i = 1; i <= column - 1; i++){
-                const nextCharacter = character => String.fromCharCode(character.charCodeAt(0) + 1);
-                columnCharacter = nextCharacter(columnCharacter);  
-            }
-
-            let color = "";
-
-            switch(row % 2){
+            switch(column){
                 case 0:
-                    if(column % 2 === 0){
-                        color = "black";
-                    }
-                    else{
-                        color = "white";
-                    }
+                    return "rook";
+                    break;
+                case 7:
+                    return "rook";
                     break;
                 case 1:
-                    if(column % 2 === 0){
-                        color = "white";
-                    }
-                    else{
-                        color = "black";
-                    }
+                    return "knight";
+                    break;
+                case 6:
+                    return "knight";
+                    break;
+                case 2:
+                    return "bishop";
+                    break;
+                case 5:
+                    return "bishop";
                     break;
             }
-
-            let ${columnCharacter + row} = new squareInformation(row, columnCharacter, color, "empty")
-
-            squareInformationArray.push((columnCharacter + row));
         }
-    }
-    console.log(squareInformationArray);
-}
 
-function addPieces(){
+        else return "nothing";
+    },
 
-}
+    getPieceColor: (row) => {
 
-createPlayableChessBoard();
+        if(row === 0 || row === 1) return "white";
+        if(row === 6 || row === 7) return "black";
+        
+        else return "none";
+    },
+
+    createChessBoard: () => {
+
+        class squareInformation{
+
+            constructor(row, column, squareColor, contains, pieceColor){
+                this.coordinates = column + (row + 1);
+                this.row = row + 1;
+                this.column = column;
+                this.squareColor = squareColor;
+                this.contains = contains;
+                this.pieceColor = pieceColor;
+            }
+        };
+
+        const chessBoardArray = [[],[],[],[],[],[],[],[],]; //array representing chess board
+
+        for(let row = 0; row <= 7; row++){
+            
+            for(let column = 0; column <= 7; column++){
+
+                chessBoardArray[row].push(new squareInformation(
+                    row, createChessBoard.convertNumberToCharacter(column), createChessBoard.getSquareColor(row, column), createChessBoard.addPieces(row, column), createChessBoard.getPieceColor(row)
+                )); //output
+            }
+        };
+        
+        return chessBoardArray;
+    },
+};
+
+console.log(createChessBoard.createChessBoard());
